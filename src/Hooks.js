@@ -15,6 +15,7 @@ const todosList = [
 const InputBar = ({ onSubmit }) => {
   const [input, setInput] = useState("")
 
+  // No empties
   const toSubmit = (event) => {
     event.preventDefault()
     if (input !== "") onSubmit(input)
@@ -48,7 +49,11 @@ const TaskRow = ({ name, complete, index, onComplete, onRemove }) => {
   const [text, setText] = useState("Incomplete")
   const [color, setColor] = useState("pink")
 
-  // Not sure if this is better than the cc example...
+  /**
+   * Not sure if this is better than the cc example...
+   * Conditional statement sets internal tag attributes only
+   * then callback to parent to edit state (no side effect?)
+   */
   const completeTask = () => {
     if (text === "Incomplete") {
       setText("Complete")
@@ -60,7 +65,12 @@ const TaskRow = ({ name, complete, index, onComplete, onRemove }) => {
     onComplete(!complete, index)
   }
 
+  /**
+   * Removes task from list.
+   * callback to parent to edit state.
+   */
   const removeTask = () => onRemove(index)
+
   return (
     <div className="wrapper" style={{ backgroundColor: color }}>
       <h3>{name}</h3>
@@ -79,23 +89,36 @@ const TaskRow = ({ name, complete, index, onComplete, onRemove }) => {
 }
 
 /**
- * Maps data from directory to TaskRow-components and modifies the data when user interacts with the TaskRow.
+ * Maps data from directory to TaskRow-components
+ * and modifies the data when user interacts with the TaskRow.
  */
 const ToDoList = () => {
   const [todos, setTodos] = useState(todosList)
 
+  /**
+   * Submits:
+   * Adds new task to list and sets state.
+   */
   const handleSubmit = (value) => {
     let newTodos = [...todos]
     newTodos.push({ id: newTodos.length + 1, name: value, complete: false })
     setTodos(newTodos)
   }
 
+  /**
+   * "Completes":
+   * Toggles complete in the specified index and sets state.
+   */
   const handleComplete = (complete, index) => {
     let newTodos = [...todos]
     newTodos[index].complete = complete
     setTodos(newTodos)
   }
 
+  /**
+   * Removes:
+   * Removes task from list and sets state.
+   */
   const handleRemove = (index) => {
     let newTodos = [...todos]
     newTodos.splice(index, 1)
