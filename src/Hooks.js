@@ -9,6 +9,9 @@ const todosList = [
   { id: 5, name: "Change car tyres", complete: false },
 ]
 
+/**
+ * Bar for inputting task.
+ */
 const InputBar = ({ onSubmit }) => {
   const [input, setInput] = useState("")
 
@@ -38,6 +41,9 @@ const InputBar = ({ onSubmit }) => {
   )
 }
 
+/**
+ * Renders the Task name, state (complete), and sends callbacks to parent to modify state.
+ */
 const TaskRow = ({ name, complete, index, onComplete, onRemove }) => {
   const [text, setText] = useState("Incomplete")
   const [color, setColor] = useState("pink")
@@ -69,6 +75,9 @@ const TaskRow = ({ name, complete, index, onComplete, onRemove }) => {
   )
 }
 
+/**
+ * Maps data from directory to TaskRow-components and modifies the data when user interacts with the TaskRow.
+ */
 const ToDoList = () => {
   const [todos, setTodos] = useState(todosList)
 
@@ -110,6 +119,9 @@ const ToDoList = () => {
   )
 }
 
+/**
+ * "Sugar"
+ */
 const Hooks = () => {
   return (
     <>
