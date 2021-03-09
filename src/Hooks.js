@@ -61,14 +61,17 @@ const TaskRow = ({ name, complete, index, onComplete, onRemove }) => {
   }
 
   const removeTask = () => onRemove(index)
-
   return (
     <div className="wrapper" style={{ backgroundColor: color }}>
       <h3>{name}</h3>
       <button className="btn" onClick={completeTask}>
         {text}
       </button>
-      <button className="btn" onClick={removeTask}>
+      <button
+        className="btn"
+        onClick={removeTask}
+        style={{ backgroundColor: "rgb(146, 31, 27)" }}
+      >
         Remove from list
       </button>
     </div>
@@ -114,7 +117,6 @@ const ToDoList = () => {
         ))}
       </div>
       <InputBar onSubmit={handleSubmit}></InputBar>
-      <button onClick={console.log(todos)} />
     </>
   )
 }
