@@ -31,7 +31,7 @@ export const TaskRow = ({ name, complete, index, onComplete, onRemove }) => {
   const removeTask = () => onRemove(index)
 
   return (
-    <div className="wrapper" style={{ backgroundColor: color }}>
+    <div className="wrapper " style={{ backgroundColor: color }}>
       <h3>{name}</h3>
       <button className="btn" onClick={completeTask}>
         {text}
@@ -39,7 +39,7 @@ export const TaskRow = ({ name, complete, index, onComplete, onRemove }) => {
       <button
         className="btn"
         onClick={removeTask}
-        style={{ backgroundColor: "rgb(146, 31, 27)" }}
+        style={{ backgroundColor: "rgb(160, 57, 57)" }}
       >
         Remove from list
       </button>
