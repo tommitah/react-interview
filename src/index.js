@@ -1,7 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import "./index.css"
-import Hooks from "./Hooks"
 import App from "./App"
+import "./index.css"
 
-ReactDOM.render(<Hooks />, document.getElementById("root"))
+ReactDOM.render(<App />, document.getElementById("root"))
