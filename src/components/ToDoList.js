@@ -50,7 +50,7 @@ export const ToDoList = () => {
 
   return (
     <>
-      <div>
+      <div className="body">
         {todos.map((todo, index) => (
           <TaskRow
             key={index}
@@ -61,8 +61,8 @@ export const ToDoList = () => {
             onRemove={handleRemove}
           />
         ))}
+        <InputBar onSubmit={handleSubmit}></InputBar>
       </div>
-      <InputBar onSubmit={handleSubmit}></InputBar>
     </>
   )
 }
