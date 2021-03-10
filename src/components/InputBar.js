@@ -16,6 +16,8 @@ export const InputBar = ({ onSubmit }) => {
 
   return (
     <form
+      name="user-input"
+      role="form"
       className="wrapper"
       style={{ gridTemplateColumns: "7fr 2fr" }}
       onSubmit={toSubmit}
