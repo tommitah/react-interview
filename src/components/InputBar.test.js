@@ -1,33 +1,47 @@
-import { cleanup } from "@testing-library/react"
-import Enzyme, { shallow } from "enzyme"
-import Adapter from "enzyme-adapter-react-16"
+import { cleanup, render, fireEvent } from "@testing-library/react"
 import React from "react"
 import { InputBar } from "./InputBar"
-import { ToDoList } from "./ToDoList"
-
-Enzyme.configure({ adapter: new Adapter() })
 
 afterEach(cleanup)
 
-describe("Testing form", () => {
-  test("should render children inside form", () => {
-    const wrapper = shallow(<InputBar />)
-    const form = wrapper.find("form")
-    expect(form).toBeTruthy()
-    expect(form.find("input")).toBeTruthy()
-    expect(form.find("button")).toBeTruthy()
+it("renders correctly", () => {
+  const { queryByTestId, queryByPlaceholderText } = render(<InputBar />)
+
+  expect(queryByTestId("submit-button")).toBeTruthy()
+  expect(queryByPlaceholderText("Add new todo")).toBeTruthy()
+})
+
+describe("Testing input", () => {
+  it("updates on change", () => {
+    const { queryByPlaceholderText } = render(<InputBar />)
+
+    const taskInput = queryByPlaceholderText("Add new todo")
+    fireEvent.change(taskInput, { target: { value: "Adopt a dog" } })
+    expect(taskInput.value).toBe("Adopt a dog")
+  })
+})
+
+describe("Testing Submit button", () => {
+  describe("without input", () => {
+    it("doesn't submit to list", () => {
+      const onSubmit = jest.fn()
+      const { queryByTestId } = render(<InputBar onSubmit={onSubmit} />)
+      fireEvent.click(queryByTestId("submit-button"))
+      expect(onSubmit).not.toHaveBeenCalled()
+    })
   })
 
-  test("should update input-state when user types in input", () => {})
+  describe("with input", () => {
+    it("submits input as task to list", () => {
+      const onSubmit = jest.fn()
+      const { queryByTestId, queryByPlaceholderText } = render(
+        <InputBar onSubmit={onSubmit} />
+      )
+      const taskInput = queryByPlaceholderText("Add new todo")
+      fireEvent.change(taskInput, { target: { value: "Adopt a dog" } })
 
-  test("should call onSubmit when user clicks button", () => {
-    const onSubmit = jest.fn()
-    const wrapper = shallow(<InputBar onSubmit={onSubmit} />)
-
-    wrapper
-      .find("form")
-      .find("button")
-      .invoke("onSubmit", { target: { value: "user input" } })
-    expect(onSubmit).toBeCalledWith(expect.anything())
+      fireEvent.click(queryByTestId("submit-button"))
+      expect(onSubmit).toHaveBeenCalled()
+    })
   })
 })

@@ -10,8 +10,12 @@ export const InputBar = ({ onSubmit }) => {
   // No empties
   const toSubmit = (event) => {
     event.preventDefault()
-    if (input !== "") onSubmit(input)
+    if (input) onSubmit(input)
     setInput("")
+  }
+
+  const updateInput = (e) => {
+    setInput(e.target.value)
   }
 
   return (
@@ -22,14 +26,13 @@ export const InputBar = ({ onSubmit }) => {
       style={{ gridTemplateColumns: "7fr 2fr" }}
       onSubmit={toSubmit}
     >
-      <input
-        placeholder="Add new todo"
-        value={input}
-        onChange={(e) => {
-          setInput(e.target.value)
-        }}
-      />
-      <button className="btn btn-success" type="submit" value="Submit">
+      <input placeholder="Add new todo" value={input} onChange={updateInput} />
+      <button
+        className="btn btn-success"
+        data-testid="submit-button"
+        type="submit"
+        value="Submit"
+      >
         Submit
       </button>
     </form>
