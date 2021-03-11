@@ -23,8 +23,9 @@ export const ToDoList = () => {
    * Adds new task to list and sets state.
    */
   const handleSubmit = (value) => {
-    let newTodos = [...todos]
-    newTodos.push({ id: newTodos.length + 1, name: value, complete: false })
+    const newTodos = todos.concat([
+      { id: todos.length + 1, name: value, complete: false },
+    ])
     setTodos(newTodos)
   }
 
@@ -33,8 +34,10 @@ export const ToDoList = () => {
    * Toggles complete in the specified index and sets state.
    */
   const handleComplete = (complete, index) => {
-    let newTodos = [...todos]
-    newTodos[index].complete = complete
+    const newTodos = todos.map((task) => {
+      if (task[index]) return Object.assign({}, task, { complete })
+      return task
+    })
     setTodos(newTodos)
   }
 
@@ -43,8 +46,7 @@ export const ToDoList = () => {
    * Removes task from list and sets state.
    */
   const handleRemove = (index) => {
-    let newTodos = [...todos]
-    newTodos.splice(index, 1)
+    const newTodos = [...todos.slice(0, index), ...todos.slice(index + 1)]
     setTodos(newTodos)
   }
 
